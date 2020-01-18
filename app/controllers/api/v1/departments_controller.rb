@@ -1,5 +1,5 @@
 class Api::V1::DepartmentsController < ApplicationController
-  before_action :authenticate_employee!
+  before_action :authenticate_api_v1_employee!
   before_action :set_department, only: [:show, :update, :destroy]
 
   def index
@@ -35,11 +35,12 @@ class Api::V1::DepartmentsController < ApplicationController
   end
 
   private
-    def set_department
-      @department = Department.find(params[:id])
-    end
 
-    def department_params
-      params.fetch(:department, {})
-    end
+  def set_department
+    @department = Department.find(params[:id])
+  end
+
+  def department_params
+    params.fetch(:department, {})
+  end
 end

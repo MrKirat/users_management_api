@@ -1,5 +1,5 @@
 class Api::V1::EmployeesController < ApplicationController
-  before_action :authenticate_employee!
+  before_action :authenticate_api_v1_employee!
   before_action :set_employee, only: [:show, :update, :destroy]
 
   def index
