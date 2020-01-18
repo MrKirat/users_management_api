@@ -3,7 +3,11 @@ class Api::V1::EmployeesController < ApplicationController
   before_action :set_employee, only: [:show, :update, :destroy]
 
   def index
-    @employees = Employee.all.includes(:department).paginate(page: params[:page], per_page: 10)
+    # Select all employees where name start with value of params[:name]
+    @employees = Employee
+                     .where("name like ?", "#{params[:name]}%")
+                     .includes(:department)
+                     .paginate(page: params[:page], per_page: 10)
 
     render json: @employees, adapter: :json, meta: {
         total_entries: @employees.total_entries,
