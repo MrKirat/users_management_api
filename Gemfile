@@ -22,6 +22,9 @@ gem 'devise_token_auth'
 # For better serialization
 gem 'active_model_serializers'
 
+# For paginating
+gem 'will_paginate'
+
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 
