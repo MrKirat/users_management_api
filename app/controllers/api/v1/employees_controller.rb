@@ -7,7 +7,8 @@ class Api::V1::EmployeesController < ApplicationController
     @employees = Employee
                      .where("name like ?", "#{params[:name]}%")
                      .includes(:department)
-                     .paginate(page: params[:page], per_page: 10)
+                     .order(:id)
+                     .paginate(page: params[:page] || 1, per_page: params[:per_page] || 10)
 
     render json: @employees, adapter: :json, meta: {
         total_entries: @employees.total_entries,
@@ -21,16 +22,6 @@ class Api::V1::EmployeesController < ApplicationController
 
   def show
     render json: @employee
-  end
-
-  def create
-    @employee = Employee.new(employee_params)
-
-    if @employee.save
-      render json: @employee, status: :created, location: @employee
-    else
-      render json: @employee.errors, status: :unprocessable_entity
-    end
   end
 
   def update
@@ -52,6 +43,6 @@ class Api::V1::EmployeesController < ApplicationController
   end
 
   def employee_params
-    params.fetch(:employee, {})
+    params.require(:employee).permit(:name, :active, :department_id)
   end
 end

@@ -1,5 +1,5 @@
 class Api::V1::DepartmentsController < ApplicationController
-  before_action :authenticate_api_v1_employee!
+  before_action :authenticate_api_v1_employee!, only: [:create, :destroy, :update]
   before_action :set_department, only: [:show, :update, :destroy]
 
   def index
